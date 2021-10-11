@@ -75,7 +75,7 @@ class CommentApp extends React.Component {
         commentBody: '',
       });
       this.saveToStorage(comments);
-      document.querySelector('.form__addcom').reset();
+      // document.querySelector('.form__addcom').reset();
     }
   }
 
@@ -87,10 +87,8 @@ class CommentApp extends React.Component {
     const newComments = allComments.filter((item) => {
       const commentId = item['id'].toString();
       if (id === commentId) {
-        console.log(typeof commentId, typeof id);
         return false;
       } else {
-        console.log(typeof commentId, typeof id);
         return true;
       }
     });
@@ -101,7 +99,7 @@ class CommentApp extends React.Component {
   render() {
     return (
       <div className="comment-app">
-        <AddComment onChangeValue={this.onChangeHandler} submitHandler={this.onSubmitHandler} />
+        <AddComment onChangeValue={this.onChangeHandler} submitHandler={this.onSubmitHandler} formState={this.state}/>
         <Records comments={this.state.comments} deleteComment={this.btnDeleteClickHandler} />
       </div>
     );
@@ -113,6 +111,7 @@ class AddComment extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.clickSubmitHandler = this.clickSubmitHandler.bind(this);
+    this.form = React.createRef();
   }
 
   handleChange(event) {
@@ -122,13 +121,16 @@ class AddComment extends React.Component {
   clickSubmitHandler(event) {
     event.preventDefault();
     this.props.submitHandler(event);
+    if (this.props.formState.commentAuthor !== '' && this.props.formState.commentBody !== '') {
+      this.form.current.reset()
+    }
   }
 
   render() {
     return (
       <div className="comment__add">
         <h2 className="comment__head">Добавить комментарий</h2>
-        <form name="add-comment" className="form__addcom">
+        <form name="add-comment" className="form__addcom" ref={this.form} >
           <label htmlFor="author_com">Автор комментария</label>
           <input
             id="author_com"
