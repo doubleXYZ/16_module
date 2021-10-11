@@ -99,7 +99,7 @@ class CommentApp extends React.Component {
   render() {
     return (
       <div className="comment-app">
-        <AddComment onChangeValue={this.onChangeHandler} submitHandler={this.onSubmitHandler} formState={this.state}/>
+        <AddComment onChangeValue={this.onChangeHandler} submitHandler={this.onSubmitHandler} />
         <Records comments={this.state.comments} deleteComment={this.btnDeleteClickHandler} />
       </div>
     );
@@ -121,7 +121,7 @@ class AddComment extends React.Component {
   clickSubmitHandler(event) {
     event.preventDefault();
     this.props.submitHandler(event);
-    if (this.props.formState.commentAuthor !== '' && this.props.formState.commentBody !== '') {
+    if (this.props.commentAuthor !== '' && this.props.commentBody !== '') {
       this.form.current.reset()
     }
   }
