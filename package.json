@@ -1,7 +1,7 @@
 {
-  "name": "skillbox-15-module",
+  "name": "skillbox-16-module",
   "version": "1.0.0",
-  "description": "Skillbox homework. Module 15",
+  "description": "Skillbox homework. Module 16",
   "main": "./src/js/index.js",
   "scripts": {
     "dev": "webpack --mode development --node-env development --watch",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/doubleXYZ/SKILLBOX_15_module.git"
+    "url": "https://github.com/doubleXYZ/SKILLBOX_16_module.git"
   },
   "keywords": [
     "React"
