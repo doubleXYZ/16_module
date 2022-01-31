@@ -1,6 +1,6 @@
 csscomb.json
 prettier.config.js
-.editorconfig
+package-lock.json
 /node_modules
 /dist
 /.vscode

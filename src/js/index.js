@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import Records from './Records';
+import AddComment from './AddComment';
+import getCurrentDate from './getCurrentDate';
 import '../css/comments.css';
-
 
 
 class CommentApp extends React.Component {
@@ -99,116 +101,19 @@ class CommentApp extends React.Component {
   render() {
     return (
       <div className="comment-app">
-        <AddComment onChangeValue={this.onChangeHandler} submitHandler={this.onSubmitHandler} />
-        <Records comments={this.state.comments} deleteComment={this.btnDeleteClickHandler} />
+        <AddComment
+          onChangeValue={this.onChangeHandler}
+          submitHandler={this.onSubmitHandler}
+          commentBody={this.state.commentBody}
+          commentAuthor={this.state.commentAuthor}
+        />
+        <Records
+          comments={this.state.comments}
+          deleteComment={this.btnDeleteClickHandler}
+        />
       </div>
     );
   }
-}
-
-class AddComment extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.clickSubmitHandler = this.clickSubmitHandler.bind(this);
-    this.form = React.createRef();
-  }
-
-  handleChange(event) {
-    this.props.onChangeValue(event);
-  }
-
-  clickSubmitHandler(event) {
-    event.preventDefault();
-    this.props.submitHandler(event);
-    if (this.props.commentAuthor !== '' && this.props.commentBody !== '') {
-      this.form.current.reset()
-    }
-  }
-
-  render() {
-    return (
-      <div className="comment__add">
-        <h2 className="comment__head">Добавить комментарий</h2>
-        <form name="add-comment" className="form__addcom" ref={this.form} >
-          <label htmlFor="author_com">Автор комментария</label>
-          <input
-            id="author_com"
-            name="commentAuthor"
-            type="text"
-            value={this.props.commentAuthor}
-            onChange={this.handleChange}
-            className="form__author"
-          />
-
-          <textarea
-            name="commentBody"
-            value={this.props.commentBody}
-            onChange={this.handleChange}
-            rows="5"
-            className="form__text"
-          />
-          <div className="form__date">{getCurrentDate()}</div>
-          <input
-            type="submit"
-            value="Add comment"
-            onClick={this.clickSubmitHandler}
-            className="form__btn"
-          />
-        </form>
-      </div>
-    );
-  }
-}
-
-function Records(props) {
-  const records = props.comments;
-
-  const recordsList = records.map((record) => {
-    return (
-      <li key={record.id}>
-        <article data-id={record.id} className="comment__full">
-          <UserInfo comment_auth={record.commentAuthor} />
-          <CommentDate commentDate={record.commentDate} />
-          <CommentText commentBody={record.commentBody} />
-          <button className="comment__btn-del" onClick={props.deleteComment}>
-            Delete comment
-          </button>
-        </article>
-      </li>
-    );
-  });
-
-  return <ol className="comment__list"> {recordsList} </ol>;
-}
-
-function UserInfo(props) {
-  return <div className="comment__author"> {props.comment_auth} </div>;
-}
-
-function CommentDate(props) {
-  return <div className="comment__date">{props.commentDate}</div>;
-}
-
-function CommentText(props) {
-  return <div className="comment__body">{props.commentBody}</div>;
-}
-
-function getCurrentDate() {
-  const date = new Date();
-
-  const year = date.getFullYear();
-  const monthNum = date.getMonth();
-  const month = monthNum > 9 ? monthNum + 1 : monthNum === 9 ? monthNum + 1 : '0' + monthNum;
-  const dayNum = date.getDate();
-  const day = dayNum > 9 ? dayNum : '0' + dayNum;
-  const hoursNum = date.getHours();
-  const hours = hoursNum > 9 ? hoursNum : '0' + hoursNum;
-  const minutesNum = date.getMinutes();
-  const minutes = minutesNum > 9 ? minutesNum : '0' + minutesNum;
-  const curDate = `${year}-${month}-${day} ${hours}:${minutes}`;
-
-  return curDate;
 }
 
 function getId() {
